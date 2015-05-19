@@ -24,7 +24,8 @@ class DateController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$input = Input::all();
+		$new_date = date('Y-m-d', $input['date']);
 	}
 
 	/**

@@ -18,8 +18,8 @@ class CreateReservationTable extends Migration {
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('phone_number');
-			$table->string('email');
-			$table->string('notes');
+			$table->string('email')->nullable();
+			$table->text('notes')->nullable();
 			$table->integer('size');
 			$table->foreign('date_id')->references('id')->on('date');
 		});
