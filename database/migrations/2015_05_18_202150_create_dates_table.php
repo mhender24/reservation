@@ -14,7 +14,7 @@ class CreateDatesTable extends Migration {
 	{
 		Schema::create('date', function($table){
 			$table->increments('id');
-			$table->timestamp('date');
+			$table->date('date');
 			$table->smallInteger('counter');
 			$table->smallInteger('interval');
 			$table->smallInteger('max');

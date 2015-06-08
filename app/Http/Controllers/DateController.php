@@ -12,8 +12,7 @@ class DateController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index(){
 		return View::make('inventory.home', array('equipment' => Date::all())); //may have problems depend on view setup
 	}
 
@@ -22,8 +21,7 @@ class DateController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function postCreate()
-	{
+	public function postCreate(){
 		$input = Input::all();
 		$input['date'] = date('Y-m-d', $input['date']);
 		$validate = Date::validate($input);
@@ -41,14 +39,33 @@ class DateController extends Controller {
 	}
 
 	/**
+	*
+	*
+	*/
+	public function getDelete($id){
+		try{
+			$date = Date::find($id);
+			$reservations = Reservation::where('date_id', '=', $id);
+			foreach ($reservations as $reserve){
+				$reserve->delete()
+			}
+			$date -> delete();
+			
+		}
+		catch(Exception $e){
+			//return Redirect::back()->with('message', 'Entry Not Found')->with('alert', 'danger');
+		}
+		//return Redirect::back()->with('message', 'Entry Deleted')->with('alert', 'success');
+	}
+
+
+    /**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-
-	public function update($id)
-	{
+	public function postUpdate($id){
 		$input = Input::all();
 		$validate = Equipment::validate($input);
 		if($validate -> fails()){
@@ -66,8 +83,10 @@ class DateController extends Controller {
 		//return Redirect::back()->with('message', 'Entry Update')->with('alert', 'sucess');
 	}
 
-	public function missingMethod($parameters = array())
-	{
+	/**
+	*
+	*/
+	public function missingMethod($parameters = array()){
 		return Response::json(array('status' => 404, 'message' => 'Not found'), 404);
 	}
 
